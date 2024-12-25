@@ -1,4 +1,7 @@
-attrs~=23.2.0
-pytube~=15.0.0
-customtkinter~=5.2.2
-future~=1.0.0
+pillow
+darkdetect
+packaging
+customtkinter
+attrs
+pytube
+rich

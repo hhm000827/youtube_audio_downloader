@@ -25,7 +25,7 @@ def download_youtube_audio(url, console):
         console.insert(f"Failed to download video from {url}. Error: {str(e)}")
 
 
-def download_youtube_mp3(console, raw_urls,textbox,download_button):
+def download_youtube_mp3(console, raw_urls, textbox, download_button):
     console.insert("Downloaded MP3 will be stored in output directory")
     console.insert(f"Read URLs...\n{raw_urls}")
 
@@ -40,5 +40,5 @@ def download_youtube_mp3(console, raw_urls,textbox,download_button):
         tasks = [loop.run_in_executor(executor, download_youtube_audio, url, console) for url in urls]
         loop.run_until_complete(asyncio.gather(*tasks))
 
-    textbox.is_enable_textbox(True)
+    textbox.is_enable(True)
     download_button.is_enabled(True)
