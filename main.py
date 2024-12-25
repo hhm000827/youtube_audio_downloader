@@ -11,11 +11,11 @@ def onclick_download(textbox, console, button):
     threading.Thread(target=start_download_audio, args=(console, textbox, button)).start()
 
 
-layout = AppLayout(title="YouTube MP3 Downloader")
+layout = AppLayout(title="YouTube Audio Downloader")
 layout.set_column_config(0, 1)
 app = layout.app
 
-title = CTkLabel(app, text="YouTube MP3 Downloader", fg_color="transparent")
+title = CTkLabel(app, text="YouTube Audio Downloader", fg_color="transparent")
 title.grid(row=0, column=0, pady=(GLOBAL_PADDING_Y, 0))
 
 url_input_box = URLInputBox(app, label_row=1, label_padding_x=GLOBAL_PADDING_X, textbox_padding_x=GLOBAL_PADDING_X)
