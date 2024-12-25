@@ -3,5 +3,5 @@ darkdetect
 packaging
 customtkinter
 attrs
-pytube
 rich
+pytubefix

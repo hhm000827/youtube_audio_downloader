@@ -17,8 +17,10 @@ class Console(BaseTextBox):
         self.textbox.configure(state="disabled")
 
     def insert(self, text):
+        self.textbox.configure(state="normal")
         logger.info(f"Insert:\n{text}")
         self.textbox.insert(END, text + "\n")
+        self.textbox.configure(state="disabled")
 
     def clear(self):
         self.textbox.delete("0.0", "end")

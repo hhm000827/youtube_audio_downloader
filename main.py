@@ -3,18 +3,12 @@ import threading
 from customtkinter import CTkLabel
 
 from components import AppLayout, Button, Console, URLInputBox
-from utils import download_youtube_mp3
-
-GLOBAL_PADDING_X = 20
-GLOBAL_PADDING_Y = 20
+from constant import GLOBAL_PADDING_Y, GLOBAL_PADDING_X
+from utils import start_download_audio
 
 
 def onclick_download(textbox, console, button):
-    console.clear()
-    textbox.is_enable(False)
-    button.is_enabled(False)
-    text = textbox.read_urls()
-    threading.Thread(target=download_youtube_mp3, args=(console, text, textbox, button)).start()
+    threading.Thread(target=start_download_audio, args=(console, textbox, button)).start()
 
 
 layout = AppLayout(title="YouTube MP3 Downloader")
