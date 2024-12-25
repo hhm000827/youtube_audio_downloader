@@ -18,7 +18,6 @@ class Console(BaseTextBox):
 
     def insert(self, text):
         self.textbox.configure(state="normal")
-        logger.info(f"Insert:\n{text}")
         self.textbox.insert(END, text + "\n")
         self.textbox.configure(state="disabled")
 
