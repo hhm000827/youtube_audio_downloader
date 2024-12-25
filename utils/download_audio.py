@@ -31,6 +31,8 @@ async def download_all(loop, urls, console):
             task_id = progress.add_task("Downloading...", total=len(urls))
             tasks = [loop.run_in_executor(executor, download, url, console, task_id, progress) for url in urls]
             await asyncio.gather(*tasks)
+        logger.info("All downloads are finished")
+        console.insert("All downloads are finished")
 
 
 def start_download_audio(console, textbox, download_button):
