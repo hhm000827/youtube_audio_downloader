@@ -5,7 +5,10 @@ from attrs import define, field
 from customtkinter import CTkEntry, CTkLabel, CTkFrame
 
 from constant import GLOBAL_PADDING_X, GLOBAL_PADDING_Y, OUTPUT_DIR
+from utils import Logger
 from .button import Button
+
+logger = Logger().logger
 
 
 @define
@@ -41,3 +44,8 @@ class DirDialog(CTkFrame):
 
         self.entry.insert(0, path)
         self.entry.configure(state="disabled")
+
+    def get_path(self):
+        path = self.entry.get() if self.entry.get() else OUTPUT_DIR
+        logger.info(f"Output directory: {path}")
+        return path

@@ -27,11 +27,16 @@ class ComboBox(CTkFrame):
         self.Label.grid(row=0, column=0, sticky="w")
 
         combobox_var = customtkinter.StringVar(value=self.options[0])
-        self.combobox = CTkComboBox(self, values=self.options, variable=combobox_var, command=self.__on_select)
+        self.combobox = CTkComboBox(self, values=self.options, variable=combobox_var)
         self.combobox.grid(row=1, column=0, columnspan=self.column_span, sticky="w")
 
         self.grid(row=self.row, column=self.column, columnspan=self.column_span, padx=GLOBAL_PADDING_X,
                   pady=GLOBAL_PADDING_Y, sticky="ew")
 
-    def __on_select(self, choice):
-        logger.info(f"Selected option: {choice}")
+    def is_enable(self, is_enable: bool = True):
+        self.combobox.configure(state="normal" if is_enable else "disabled")
+
+    def get_option(self):
+        option = self.combobox.get()
+        logger.info(f"Current option: {option}")
+        return option
