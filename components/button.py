@@ -1,11 +1,12 @@
 import customtkinter
 from attr import define, field
+from customtkinter import CTkFrame
 
 
 @define()
 class Button:
     button: customtkinter.CTkButton = field(init=False)
-    app: customtkinter.CTk = field(default=customtkinter.CTk())
+    app: customtkinter.CTk | CTkFrame = field(default=customtkinter.CTk())
     text: str = field(default="Button")
     command: callable = field(default=lambda: print("Button clicked"))
     row: int = field(default=0)
