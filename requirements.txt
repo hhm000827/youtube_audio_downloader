@@ -1,8 +1,7 @@
-pillow
-darkdetect
-packaging
-customtkinter
-attrs
-rich
 pytubefix
+rich
+attrs
 pydash
+customtkinter
+future
+validators
