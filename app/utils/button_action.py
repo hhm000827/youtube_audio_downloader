@@ -2,7 +2,7 @@ import threading
 
 from pydash import is_empty
 
-from jobs import start_download_audio
+from app.jobs import start_download_audio
 
 
 def onclick_download(textbox, console, download_button, dir_dialog, url_source_option):

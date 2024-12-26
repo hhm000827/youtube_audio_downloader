@@ -2,7 +2,7 @@ from tkinter import END
 
 from attr import define, field
 
-from utils import Logger
+from app.utils import Logger
 from .base_text_box import BaseTextBox
 
 logger = Logger().logger

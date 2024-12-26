@@ -2,8 +2,8 @@ import customtkinter
 from attrs import define, field
 from customtkinter import CTkComboBox, CTkFrame, CTkLabel
 
-from constant import GLOBAL_PADDING_X, GLOBAL_PADDING_Y
-from utils import Logger
+from app.constant import GLOBAL_PADDING_X, GLOBAL_PADDING_Y
+from app.utils import Logger
 
 logger = Logger().logger
 

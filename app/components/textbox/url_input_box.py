@@ -2,8 +2,8 @@ import validators
 from attr import define, field
 from pydash import is_blank
 
-from constant import GLOBAL_PADDING_Y
-from utils import Logger
+from app.constant import GLOBAL_PADDING_Y
+from app.utils import Logger
 from .base_text_box import BaseTextBox
 from .. import Button
 

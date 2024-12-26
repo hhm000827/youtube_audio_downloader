@@ -5,8 +5,8 @@ from pytubefix import YouTube, Playlist
 from pytubefix.cli import on_progress
 from rich.progress import Progress
 
-from constant import MOVIE_MUSIC
-from utils.logger import Logger
+from app.constant import MOVIE_MUSIC
+from app.utils.logger import Logger
 
 logger = Logger().logger
 
