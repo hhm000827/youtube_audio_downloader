@@ -14,9 +14,11 @@ class Button:
     padding_y: int | tuple = field(default=0)
     sticky: str = field(default="")
     column_span: int = field(default=1)
+    button_color: str = field(default="blue")
 
     def __attrs_post_init__(self):
-        self.button = customtkinter.CTkButton(self.app, text=self.text, command=self.command)
+        self.button = customtkinter.CTkButton(self.app, text=self.text, command=self.command,
+                                              fg_color=self.button_color)
         self.button.grid(row=self.row, column=self.column, padx=self.padding_x, pady=self.padding_y,
                          sticky=self.sticky, columnspan=self.column_span)
 
