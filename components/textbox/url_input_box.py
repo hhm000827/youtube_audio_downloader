@@ -1,3 +1,4 @@
+import validators
 from attr import define, field
 from pydash import is_blank
 
@@ -22,8 +23,9 @@ class URLInputBox(BaseTextBox):
     def read_urls(self) -> list[str]:
         logger.info(f"Start reading URLs...")
         text = self.textbox.get("0.0", "end")  # get text from line 0 character 0 till the end
-        urls = [item.strip() for item in text.split("\n") if not is_blank(item.strip())]
-        logger.info(f"There are {len(urls)} URLs")
+        urls = [item.strip() for item in text.split("\n") if
+                not is_blank(item.strip()) and validators.url(item.strip())]
+        logger.info(f"There are {len(urls)} valid URLs")
         return urls
 
     def is_enable(self, enable=True):

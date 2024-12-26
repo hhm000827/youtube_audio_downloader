@@ -4,7 +4,7 @@ import customtkinter
 from attrs import define, field
 from customtkinter import CTkEntry, CTkLabel, CTkFrame
 
-from constant import GLOBAL_PADDING_X, GLOBAL_PADDING_Y
+from constant import GLOBAL_PADDING_X, GLOBAL_PADDING_Y, OUTPUT_DIR
 from .button import Button
 
 
@@ -32,5 +32,12 @@ class DirDialog(CTkFrame):
 
     def __browse(self):
         pass
-        # self.entry.delete(0, "end")
-        # self.entry.insert(0, self.file_dialog.askdirectory())
+        self.entry.configure(state="normal")
+        self.entry.delete(0, "end")
+        path = self.file_dialog.askdirectory(title="Select Output Directory", initialdir=OUTPUT_DIR,
+                                             mustexist=True)
+        if not path:
+            path = OUTPUT_DIR
+
+        self.entry.insert(0, path)
+        self.entry.configure(state="disabled")

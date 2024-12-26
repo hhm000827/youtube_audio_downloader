@@ -19,6 +19,6 @@ download_button = Button(app, text="Download", row=4, column=0, column_span=GLOB
                          command=lambda: onclick_download(url_input_box,
                                                           console,
                                                           download_button,
-                                                          url_input_box.clear_button))
+                                                          dir_dialog))
 
 layout.start()
