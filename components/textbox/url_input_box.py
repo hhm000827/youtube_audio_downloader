@@ -17,7 +17,7 @@ class URLInputBox(BaseTextBox):
 
     def __attrs_post_init__(self):
         super().__attrs_post_init__()
-        self.clear_button = Button(self, text="Clear", row=2, column=0, sticky="w", padding_y=(GLOBAL_PADDING_Y, 0),
+        self.clear_button = Button(self, text="Clear", row=2, column=0, sticky="w", padding_y=(GLOBAL_PADDING_Y * 2, 0),
                                    command=lambda: self.clear(), button_color="firebrick")
 
     def read_urls(self) -> list[str]:
