@@ -12,7 +12,7 @@ logger = Logger().logger
 
 @define
 class BaseTextBox(ABC, CTkFrame):
-    app: customtkinter.CTk = field(default=customtkinter.CTk())
+    app: customtkinter.CTk | CTkFrame = field(default=customtkinter.CTk())
     row: int = field(default=0)
     column_span: int = field(default=1)
     label: customtkinter.CTkLabel = field(init=False)

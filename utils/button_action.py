@@ -4,11 +4,15 @@ from pydash import is_empty
 
 from constant import OUTPUT_DIR
 from jobs import start_download_audio
+from .logger import Logger
+
+logger = Logger().logger
 
 
 def onclick_download(textbox, console, download_button, dir_dialog):
     __lock_components(console, textbox, download_button, dir_dialog)
     out_dir_path = dir_dialog.entry.get() if dir_dialog.entry.get() else OUTPUT_DIR
+    logger.info(f"Output directory: {out_dir_path}")
     urls = __read_urls(console, textbox, out_dir_path)
     if is_empty(urls):
         console.insert("No URLs found, please insert URLs")
