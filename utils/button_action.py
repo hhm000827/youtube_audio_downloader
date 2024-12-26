@@ -29,7 +29,3 @@ def __unlock_components(textbox, download_button, clear_button):
     textbox.is_enable(True)
     download_button.is_enabled(True)
     clear_button.is_enabled(True)
-
-
-def onclick_clear(textbox):
-    textbox.clear()

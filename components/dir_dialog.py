@@ -21,6 +21,7 @@ class DirDialog(CTkFrame):
 
     def __attrs_post_init__(self):
         super().__init__(master=self.app, fg_color="transparent")
+        self.grid_columnconfigure(0, weight=1)
         self.label = CTkLabel(self, text=self.label_text)
         self.label.grid(row=0, column=0, sticky="w")
         self.entry = CTkEntry(self, state="disabled", width=500)
