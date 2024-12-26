@@ -7,7 +7,7 @@ from customtkinter import CTk
 class AppLayout:
     app: CTk = field(default=customtkinter.CTk(), init=False)
     title: str = field(default="CustomTkinter App")
-    geometry: str = field(default="1080x600")
+    geometry: str = field(default="1080x800")
     appearance_mode: str = field(default="dark")
     color_theme: str = field(default="dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
 

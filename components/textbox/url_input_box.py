@@ -23,3 +23,6 @@ class URLInputBox(BaseTextBox):
 
     def is_enable(self, enable=True):
         self.textbox.configure(state="normal" if enable else "disabled")
+
+    def clear(self):
+        self.textbox.delete("1.0", "end")
