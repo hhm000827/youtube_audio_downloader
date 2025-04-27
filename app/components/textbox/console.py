@@ -1,27 +1,32 @@
-from tkinter import END
-
+import flet as ft
 from attr import define, field
-
 from app.utils import Logger
-from .base_text_box import BaseTextBox
 
 logger = Logger().logger
 
-
 @define
-class Console(BaseTextBox):
-    label_text: str = field(default="Console:", init=False)
+class Console(ft.TextField):
+    label_text: str = field(default="Console")
 
     def __attrs_post_init__(self):
-        super().__attrs_post_init__()
-        self.textbox.configure(state="disabled")
+        super().__init__()
+        self.label=self.label_text
+        self.multiline=True
+        self.min_lines=10
+        self.max_lines=10
+        self.width=500
+        self.read_only=True
+        self.selectable=True
+        self.border_color=ft.Colors.WHITE
 
     def insert(self, text):
-        self.textbox.configure(state="normal")
-        self.textbox.insert(END, text + "\n")
-        self.textbox.configure(state="disabled")
+        self.value = (self.value or "") + text + "\n"
+        self.update()
 
     def clear(self):
-        self.textbox.configure(state="normal")
-        self.textbox.delete("0.0", "end")
-        self.textbox.configure(state="disabled")
+        self.value = ""
+        self.update()
+
+    def is_enabled(self, enable=True):
+        self.disabled = not enable
+        self.update()

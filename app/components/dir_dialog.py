@@ -1,51 +1,47 @@
-from tkinter import filedialog
-
-import customtkinter
-from attrs import define, field
-from customtkinter import CTkEntry, CTkLabel, CTkFrame
-
-from app.constant import GLOBAL_PADDING_X, GLOBAL_PADDING_Y, OUTPUT_DIR
+import flet as ft
+from attr import define, field
 from app.utils import Logger
 from .button import Button
 
 logger = Logger().logger
 
-
 @define
-class DirDialog(CTkFrame):
-    app: customtkinter.CTk | CTkFrame = field(default=customtkinter.CTk())
-    row: int = field(default=0)
-    column_span: int = field(default=1)
+class DirDialog(ft.Row):
+    label_text: str = field(default="Output Directory:")
+    path: str = field(default="")
+    entry: ft.TextField = field(init=False)
     button: Button = field(init=False)
-    entry: CTkEntry = field(init=False)
-    file_dialog: filedialog = field(default=filedialog, init=False)
-    label: CTkLabel = field(init=False)
-    label_text: str = field(default="Output Directory:", init=False)
+    file_picker: ft.FilePicker = field(default=None)
 
     def __attrs_post_init__(self):
-        super().__init__(master=self.app, fg_color="transparent")
-        self.grid_columnconfigure(0, weight=1)
-        self.label = CTkLabel(self, text=self.label_text)
-        self.label.grid(row=0, column=0, sticky="w")
-        self.entry = CTkEntry(self, state="disabled", width=500)
-        self.entry.grid(row=1, column=0, sticky="ew", padx=(0, GLOBAL_PADDING_X))
-        self.button = Button(self, text="Browse", row=1, column=1, command=self.__browse, sticky="w")
-        self.grid(row=self.row, column=0, columnspan=self.column_span, padx=GLOBAL_PADDING_X, pady=GLOBAL_PADDING_Y,
-                  sticky="ew")
+        super().__init__()
+        self.entry = ft.TextField(label=self.label_text, value=self.path, width=400, read_only=True, border_color=ft.Colors.WHITE)
+        self.button = Button("Browse", command=self.browse, bg_color=ft.Colors.BLUE_700, text_color=ft.Colors.WHITE)
+        self.controls=[self.entry, self.button]
 
-    def __browse(self):
-        pass
-        self.entry.configure(state="normal")
-        self.entry.delete(0, "end")
-        path = self.file_dialog.askdirectory(title="Select Output Directory", initialdir=OUTPUT_DIR,
-                                             mustexist=True)
-        if not path:
-            path = OUTPUT_DIR
+    def set_file_picker(self, file_picker):
+        self.file_picker = file_picker
 
-        self.entry.insert(0, path)
-        self.entry.configure(state="disabled")
+    def browse(self, e=None):
+        if not self.file_picker:
+            logger.error("FilePicker not set!")
+            return
+        def on_result(e: ft.FilePickerResultEvent):
+            if e.path:
+                self.path = e.path
+                self.entry.value = self.path
+                self.entry.update()
+        self.file_picker.on_result = on_result
+        self.file_picker.get_directory_path()
 
     def get_path(self):
-        path = self.entry.get() if self.entry.get() else OUTPUT_DIR
+        path = self.entry.value
         logger.info(f"Output directory: {path}")
         return path
+
+    def is_enabled(self, enable=True):
+        self.entry.disabled = not enable
+        self.button.disabled = not enable
+        self.button.bgcolor = ft.Colors.BLUE_700 if enable else ft.Colors.GREY_700
+        self.entry.update()
+        self.button.update()

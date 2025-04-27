@@ -5,39 +5,49 @@ from pydash import is_empty
 from app.jobs import start_download_audio
 
 
-def onclick_download(textbox, console, download_button, dir_dialog, url_source_option):
-    __lock_components(console, textbox, download_button, dir_dialog, url_source_option)
+def onclick_download(url_input_box, console, download_button, dir_dialog, url_source_option, audio_type_dropdown):
+    console.clear()
+    
     url_type = url_source_option.get_option()
-    console.insert(f"URL Type: {url_type}")
     out_dir_path = dir_dialog.get_path()
-    urls = __read_urls(console, textbox, out_dir_path)
+    urls = __read_urls(console, url_input_box)
+    audio_type = audio_type_dropdown.get_option()
+    
+    is_valid = validate(console, audio_type, url_type, out_dir_path, urls)
+    if is_valid:
+        __set_components_enabled(url_input_box, download_button, dir_dialog, url_source_option, audio_type_dropdown, False)
+        def run_download():
+            start_download_audio(console, urls, out_dir_path, url_type, audio_type)
+            __set_components_enabled(url_input_box, download_button, dir_dialog, url_source_option, audio_type_dropdown, True)
+        t = threading.Thread(target=run_download)
+        t.start()
+
+def validate(console, audio_type, url_type, out_dir_path, urls):
+    is_valid = True
     if is_empty(urls):
         console.insert("No URLs found, please insert URLs")
-    else:
-        threading.Thread(target=start_download_audio, args=(console, urls, out_dir_path, url_type)).start()
-    __unlock_components(textbox, download_button, dir_dialog, url_source_option)
+        is_valid = False
+    if is_empty(out_dir_path):
+        console.insert("No output directory found, please select an output directory")
+        is_valid = False
+    if is_empty(url_type):
+        console.insert("No URL type found, please select a URL type")
+        is_valid = False
+    if is_empty(audio_type):
+        console.insert("No audio type found, please select an audio type")
+        is_valid = False
+    return is_valid
 
 
-def __lock_components(console, urls_input_box, download_button, dir_dialog, url_source_option):
-    console.clear()
-    url_source_option.is_enable(False)
-    urls_input_box.is_enable(False)
-    urls_input_box.clear_button.is_enabled(False)
-    dir_dialog.button.is_enabled(False)
-    download_button.is_enabled(False)
+def __set_components_enabled(urls_input_box, download_button, dir_dialog, url_source_option, audio_type_dropdown, enabled):
+    url_source_option.is_enabled(enabled)
+    urls_input_box.is_enabled(enabled)
+    dir_dialog.is_enabled(enabled)
+    download_button.is_enabled(enabled)
+    audio_type_dropdown.is_enabled(enabled)
 
 
-def __read_urls(console, textbox, out_dir_path) -> list[str]:
-    console.insert(f"Downloaded audio will be stored in {out_dir_path}")
-    console.insert(f"Start reading URLs...")
+def __read_urls(console, textbox) -> list[str]:
     urls = textbox.read_urls()
     console.insert(f"There are {len(urls)} URLs found")
     return urls
-
-
-def __unlock_components(textbox, download_button, dir_dialog, url_source_option):
-    url_source_option.is_enable(True)
-    textbox.is_enable(True)
-    textbox.clear_button.is_enabled(True)
-    dir_dialog.button.is_enabled(True)
-    download_button.is_enabled(True)

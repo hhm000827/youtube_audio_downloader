@@ -2,6 +2,6 @@ pytubefix
 rich
 attrs
 pydash
-customtkinter
 future
 validators
+flet
