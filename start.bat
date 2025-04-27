@@ -1,0 +1,1 @@
+flet run -m app.main

@@ -25,11 +25,7 @@ https://music.youtube.com/xxx (Movie/Music)
 https://youtube.com/playlist?list=xxx (Playlist)
 ```
 
-2. run the app by 
-``` sh
-flet run -m app.main
-```
-
+2. run start.bat
 3. choose the URL Type: **Movie/Music** or **Playlist**
 4. write down the YouTube link in textbox line by line
 5. select the output folder
