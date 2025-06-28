@@ -21,10 +21,8 @@ def main(page: ft.Page):
     console = Console()
     download_button = Button(text_value="Download", bg_color=ft.Colors.GREEN_700, text_color=ft.Colors.WHITE)
 
-    # Add a single FilePicker to the page and set it in DirDialog
-    file_picker = ft.FilePicker()
-    page.overlay.append(file_picker)
-    dir_dialog.set_file_picker(file_picker)
+    # Add the DirDialog's FilePicker to the page overlay
+    page.overlay.append(dir_dialog.get_file_picker())
 
     # Build UI widgets
     title = ft.Text(

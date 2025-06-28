@@ -11,28 +11,29 @@ class DirDialog(ft.Row):
     path: str = field(default="")
     entry: ft.TextField = field(init=False)
     button: Button = field(init=False)
-    file_picker: ft.FilePicker = field(default=None)
+    file_picker: ft.FilePicker = field(init=False)
 
     def __attrs_post_init__(self):
         super().__init__()
+
+        self.file_picker = ft.FilePicker(on_result=self.__on_picker_result)
+
         self.entry = ft.TextField(label=self.label_text, value=self.path, width=400, read_only=True, border_color=ft.Colors.WHITE)
-        self.button = Button("Browse", command=self.browse, bg_color=ft.Colors.BLUE_700, text_color=ft.Colors.WHITE)
+        self.button = Button("Browse", command=lambda e: self.file_picker.get_directory_path(dialog_title="Select Download Directory"),
+                             bg_color=ft.Colors.BLUE_700, text_color=ft.Colors.WHITE)
         self.controls=[self.entry, self.button]
 
-    def set_file_picker(self, file_picker):
-        self.file_picker = file_picker
+    def get_file_picker(self):
+        return self.file_picker
 
-    def browse(self, e=None):
-        if not self.file_picker:
-            logger.error("FilePicker not set!")
-            return
-        def on_result(e: ft.FilePickerResultEvent):
-            if e.path:
-                self.path = e.path
-                self.entry.value = self.path
-                self.entry.update()
-        self.file_picker.on_result = on_result
-        self.file_picker.get_directory_path()
+    def __on_picker_result(self, e: ft.FilePickerResultEvent):
+        if e.path:
+            self.path = e.path
+            self.entry.value = self.path
+            self.entry.update()
+            logger.info(f"Directory selected: {self.path}")
+        else:
+            logger.info("No directory selected")
 
     def get_path(self):
         path = self.entry.value
